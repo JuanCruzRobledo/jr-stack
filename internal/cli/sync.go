@@ -33,6 +33,7 @@ type SyncFlags struct {
 	StrictTDD          bool
 	IncludePermissions bool
 	IncludeTheme       bool
+	Lite               bool
 	DryRun             bool
 }
 
@@ -67,6 +68,7 @@ func ParseSyncFlags(args []string) (SyncFlags, error) {
 	fs.BoolVar(&opts.StrictTDD, "strict-tdd", false, "enable strict TDD mode for SDD agents (RED → GREEN → REFACTOR)")
 	fs.BoolVar(&opts.IncludePermissions, "include-permissions", false, "include permissions component in sync")
 	fs.BoolVar(&opts.IncludeTheme, "include-theme", false, "include theme component in sync")
+	fs.BoolVar(&opts.Lite, "lite", false, "install only essentials: OPSX orchestrator, Engram, Context7")
 	fs.BoolVar(&opts.DryRun, "dry-run", false, "preview plan without executing")
 
 	if err := fs.Parse(args); err != nil {
@@ -82,19 +84,32 @@ func ParseSyncFlags(args []string) (SyncFlags, error) {
 
 // BuildSyncSelection builds a model.Selection for the sync command.
 //
-// Default sync scope: SDD, Engram, Context7, GGA, Skills.
+// Default sync scope (full): SDD, Engram, Context7, GGA, Skills.
+// Lite sync scope: SDD, Engram, Context7 (essentials only).
 // Excluded by default: Persona, Permissions, Theme (user-config-adjacent).
 // Permissions and Theme can be opted-in via flags.
 //
 // This is the reusable managed-asset sync contract. A future `upgrade --sync`
 // flow can call this function to get the same managed-only selection semantics.
 func BuildSyncSelection(flags SyncFlags, agentIDs []model.AgentID) model.Selection {
-	components := []model.ComponentID{
-		model.ComponentSDD,
-		model.ComponentEngram,
-		model.ComponentContext7,
-		model.ComponentGGA,
-		model.ComponentSkills,
+	var components []model.ComponentID
+
+	if flags.Lite {
+		// Lite mode: only the essentials for OPSX to work.
+		components = []model.ComponentID{
+			model.ComponentSDD,
+			model.ComponentEngram,
+			model.ComponentContext7,
+		}
+	} else {
+		// Full mode: complete ecosystem.
+		components = []model.ComponentID{
+			model.ComponentSDD,
+			model.ComponentEngram,
+			model.ComponentContext7,
+			model.ComponentGGA,
+			model.ComponentSkills,
+		}
 	}
 
 	if flags.IncludePermissions {
@@ -111,15 +126,19 @@ func BuildSyncSelection(flags SyncFlags, agentIDs []model.AgentID) model.Selecti
 		skillIDs = append(skillIDs, model.SkillID(raw))
 	}
 
+	preset := model.PresetFullGentleman
+	if flags.Lite {
+		// Lite mode uses minimal preset — no skills by default.
+		preset = model.PresetMinimal
+	}
+
 	return model.Selection{
 		Agents:     agentIDs,
 		Components: components,
 		SDDMode:    sddMode,
 		StrictTDD:  flags.StrictTDD,
 		Skills:     skillIDs,
-		// Preset is set to full-gentleman so selectedSkillIDs() returns the
-		// correct default skill set when no explicit skills are provided.
-		Preset: model.PresetFullGentleman,
+		Preset:     preset,
 	}
 }
 

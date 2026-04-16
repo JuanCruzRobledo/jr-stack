@@ -350,20 +350,64 @@ function Clear-LegacyConfig {
 }
 
 # ============================================================================
+# Installation mode selection
+# ============================================================================
+
+function Select-InstallMode {
+    Write-Step "Select installation mode"
+    Write-Host ""
+    Write-Host "  1) Lite    - OPSX essentials (orchestrator + engram + context7)  <- recommended" -ForegroundColor Green
+    Write-Host "  2) Full    - Complete ecosystem (+ skills, GGA, persona)" -ForegroundColor White
+    Write-Host "  3) Custom  - Launch TUI to pick components (run 'jr-stack' after install)" -ForegroundColor White
+    Write-Host ""
+
+    # Default to Lite if non-interactive
+    if (-not [Environment]::UserInteractive) {
+        $script:InstallMode = "lite"
+        Write-Info "Non-interactive mode detected - defaulting to Lite"
+        return
+    }
+
+    while ($true) {
+        $choice = Read-Host "  Choose [1/2/3] (default: 1)"
+        if ([string]::IsNullOrWhiteSpace($choice)) { $choice = "1" }
+
+        switch ($choice) {
+            "1" { $script:InstallMode = "lite";   Write-Success "Lite mode selected"; return }
+            "2" { $script:InstallMode = "full";   Write-Success "Full mode selected"; return }
+            "3" { $script:InstallMode = "custom"; Write-Success "Custom mode - run 'jr-stack' after install"; return }
+            default { Write-Warning "Invalid choice. Enter 1, 2, or 3." }
+        }
+    }
+}
+
+# ============================================================================
 # Sync
 # ============================================================================
 
 function Invoke-Sync {
+    # Custom mode: skip sync entirely
+    if ($script:InstallMode -eq "custom") {
+        Write-Info "Skipping sync - launch 'jr-stack' to configure via TUI"
+        return
+    }
+
     Write-Step "Running OPSX binary sync"
 
     $opsxBinary = Join-Path $env:LOCALAPPDATA "jr-stack\bin\$BINARY_NAME.exe"
 
-    if (Test-Path $opsxBinary) {
-        Write-Info "Using: $opsxBinary"
-        & $opsxBinary sync
-        Write-Success "Sync complete - OPSX config created"
-    } else {
+    if (-not (Test-Path $opsxBinary)) {
         Stop-WithError "OPSX binary not found at $opsxBinary"
+    }
+
+    Write-Info "Using: $opsxBinary"
+
+    if ($script:InstallMode -eq "lite") {
+        & $opsxBinary sync --lite
+        Write-Success "Sync complete - OPSX essentials configured (orchestrator + engram + context7)"
+    } else {
+        & $opsxBinary sync
+        Write-Success "Sync complete - full OPSX ecosystem configured"
     }
 }
 
@@ -375,17 +419,26 @@ function Show-Summary {
     Write-Host ""
     Write-Host "Installation complete!" -ForegroundColor Green
     Write-Host ""
-    Write-Host "Your agents are configured with OPSX." -ForegroundColor White
+
+    switch ($script:InstallMode) {
+        "lite" {
+            Write-Host "Lite mode: OPSX orchestrator, Engram memory, and Context7 docs configured." -ForegroundColor White
+            Write-Host "Run 'jr-stack sync' for full ecosystem, or 'jr-stack' for the TUI." -ForegroundColor DarkGray
+        }
+        "full" {
+            Write-Host "Full mode: Complete OPSX ecosystem configured for all detected agents." -ForegroundColor White
+        }
+        "custom" {
+            Write-Host "Custom mode: Binary installed. Run 'jr-stack' to open the TUI and configure." -ForegroundColor White
+        }
+    }
+
     Write-Host ""
     Write-Host "OPSX Commands:" -ForegroundColor White
     Write-Host "  /opsx:explore  - Think through ideas before committing" -ForegroundColor Cyan
     Write-Host "  /opsx:propose  - Create a change with all artifacts" -ForegroundColor Cyan
     Write-Host "  /opsx:apply    - Implement tasks from the change" -ForegroundColor Cyan
     Write-Host "  /opsx:archive  - Sync specs and close the change" -ForegroundColor Cyan
-    Write-Host ""
-    Write-Host "PROTECTED: Self-update is permanently disabled so jr-stack sync" -ForegroundColor Yellow
-    Write-Host "  will always use your OPSX binary. To undo: remove the" -ForegroundColor DarkGray
-    Write-Host "  JR_STACK_NO_SELF_UPDATE user environment variable." -ForegroundColor DarkGray
     Write-Host ""
     Write-Host ("Docs: https://github.com/" + $GITHUB_OWNER + "/" + $GITHUB_REPO) -ForegroundColor DarkGray
     Write-Host ""
@@ -402,6 +455,7 @@ function Main {
     Remove-ConflictingBinaries
     Set-PersistentNoSelfUpdate
     Update-AgentState
+    Select-InstallMode
     Clear-LegacyConfig
     Invoke-Sync
     Show-Summary

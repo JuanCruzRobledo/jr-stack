@@ -307,21 +307,65 @@ clean_previous_config() {
 }
 
 # ============================================================================
+# Installation mode selection
+# ============================================================================
+
+select_install_mode() {
+    step "Select installation mode"
+    echo ""
+    echo -e "  ${GREEN}${BOLD}1)${NC} ${BOLD}Lite${NC}    — OPSX essentials ${DIM}(orchestrator + engram + context7)${NC} ${CYAN}← recommended${NC}"
+    echo -e "  ${BOLD}2)${NC} ${BOLD}Full${NC}    — Complete ecosystem ${DIM}(+ skills, GGA, persona)${NC}"
+    echo -e "  ${BOLD}3)${NC} ${BOLD}Custom${NC}  — Launch TUI to pick components ${DIM}(run 'jr-stack' after install)${NC}"
+    echo ""
+
+    # Default to Lite if non-interactive (piped input)
+    if [ ! -t 0 ]; then
+        INSTALL_MODE="lite"
+        info "Non-interactive mode detected — defaulting to Lite"
+        return
+    fi
+
+    local choice=""
+    while true; do
+        printf "  ${BOLD}Choose [1/2/3]${NC} (default: 1): "
+        read -r choice
+        case "${choice:-1}" in
+            1) INSTALL_MODE="lite";   success "Lite mode selected"; break ;;
+            2) INSTALL_MODE="full";   success "Full mode selected"; break ;;
+            3) INSTALL_MODE="custom"; success "Custom mode — run 'jr-stack' after install to configure"; break ;;
+            *) warn "Invalid choice. Enter 1, 2, or 3." ;;
+        esac
+    done
+}
+
+# ============================================================================
 # Sync (with self-update DISABLED)
 # ============================================================================
 
 run_sync() {
+    # Custom mode: skip sync entirely — user will run jr-stack TUI.
+    if [ "$INSTALL_MODE" = "custom" ]; then
+        info "Skipping sync — launch 'jr-stack' to configure via TUI"
+        return
+    fi
+
     step "Running OPSX binary sync"
 
     # Use the EXACT path of our installed binary, NOT whatever is in PATH
     local opsx_binary="${OPSX_INSTALL_DIR}/${BINARY_NAME}"
 
-    if [ -x "$opsx_binary" ]; then
-        info "Using: $opsx_binary"
-        "$opsx_binary" sync
-        success "Sync complete — OPSX config created"
-    else
+    if [ ! -x "$opsx_binary" ]; then
         fatal "OPSX binary not found at $opsx_binary"
+    fi
+
+    info "Using: $opsx_binary"
+
+    if [ "$INSTALL_MODE" = "lite" ]; then
+        "$opsx_binary" sync --lite
+        success "Sync complete — OPSX essentials configured (orchestrator + engram + context7)"
+    else
+        "$opsx_binary" sync
+        success "Sync complete — full OPSX ecosystem configured"
     fi
 }
 
@@ -333,17 +377,26 @@ print_summary() {
     echo ""
     echo -e "${GREEN}${BOLD}Installation complete!${NC}"
     echo ""
-    echo -e "${BOLD}Your agents are configured with OPSX.${NC}"
+
+    case "$INSTALL_MODE" in
+        lite)
+            echo -e "${BOLD}Lite mode:${NC} OPSX orchestrator, Engram memory, and Context7 docs are configured."
+            echo -e "${DIM}Run 'jr-stack sync' for full ecosystem, or 'jr-stack' for the TUI.${NC}"
+            ;;
+        full)
+            echo -e "${BOLD}Full mode:${NC} Complete OPSX ecosystem configured for all detected agents."
+            ;;
+        custom)
+            echo -e "${BOLD}Custom mode:${NC} Binary installed. Run ${CYAN}jr-stack${NC} to open the TUI and configure."
+            ;;
+    esac
+
     echo ""
     echo -e "${BOLD}OPSX Commands:${NC}"
     echo -e "  ${CYAN}/opsx:explore${NC}  — Think through ideas before committing"
     echo -e "  ${CYAN}/opsx:propose${NC}  — Create a change with all artifacts"
     echo -e "  ${CYAN}/opsx:apply${NC}    — Implement tasks from the change"
     echo -e "  ${CYAN}/opsx:archive${NC}  — Sync specs and close the change"
-    echo ""
-    echo -e "${YELLOW}${BOLD}PROTECTED:${NC} Self-update is permanently disabled so 'jr-stack sync'"
-    echo -e "  ${DIM}will always use your OPSX binary. To undo: remove JR_STACK_NO_SELF_UPDATE${NC}"
-    echo -e "  ${DIM}from your shell profile.${NC}"
     echo ""
     echo -e "${DIM}Docs: https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}${NC}"
     echo ""
@@ -361,6 +414,7 @@ main() {
     remove_conflicting_binaries
     set_persistent_no_self_update
     update_agent_state
+    select_install_mode
     clean_previous_config
     run_sync
     print_summary
