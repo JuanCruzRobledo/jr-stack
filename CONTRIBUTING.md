@@ -1,6 +1,6 @@
-# Contributing to Gentle AI
+# Contributing to JR Stack
 
-Thank you for your interest in contributing to **Gentle AI** (`gga`) — a Go TUI installer for AI agent environments.
+Thank you for your interest in contributing to **JR Stack** (`jr-stack`) — a Go TUI installer for AI agent environments.
 
 Before you dive in, please read this guide fully. We have a structured workflow to keep the project organized and maintainable.
 
@@ -24,7 +24,7 @@ Before you dive in, please read this guide fully. We have a structured workflow 
 
 This project follows a strict issue-first workflow:
 
-1. **Open an issue** using the appropriate template ([Bug Report](https://github.com/Gentleman-Programming/gentle-ai/issues/new?template=bug_report.yml) or [Feature Request](https://github.com/Gentleman-Programming/gentle-ai/issues/new?template=feature_request.yml))
+1. **Open an issue** using the appropriate template ([Bug Report](https://github.com/JuanCruzRobledo/jr-stack/issues/new?template=bug_report.yml) or [Feature Request](https://github.com/JuanCruzRobledo/jr-stack/issues/new?template=feature_request.yml))
 2. **Wait for approval** — a maintainer will add the `status:approved` label when the issue is ready to be worked on
 3. **Comment on the issue** to let others know you're working on it
 4. **Open a PR** referencing the approved issue
@@ -79,15 +79,15 @@ PRs that are not linked to an approved issue will be **automatically rejected** 
 ### Clone and Build
 
 ```bash
-git clone https://github.com/Gentleman-Programming/gentle-ai.git
-cd gentle-ai
-go build -o gga .
+git clone https://github.com/JuanCruzRobledo/jr-stack.git
+cd jr-stack
+go build -o jr-stack ./cmd/jr-stack/
 ```
 
 ### Run Locally
 
 ```bash
-./gga
+./jr-stack
 ```
 
 ---
@@ -271,4 +271,4 @@ Violations may result in removal from the project.
 
 ## Questions?
 
-Use [GitHub Discussions](https://github.com/Gentleman-Programming/gentle-ai/discussions) — not issues — for questions, ideas, and general conversation.
+Use [GitHub Discussions](https://github.com/JuanCruzRobledo/jr-stack/discussions) — not issues — for questions, ideas, and general conversation.

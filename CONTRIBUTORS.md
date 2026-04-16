@@ -1,8 +1,16 @@
-# Contributors
+# JR Stack Contributors
 
-Thanks to everyone who has contributed to gentle-ai. This project exists because of the community.
+Thanks to everyone who has contributed to JR Stack. This project exists because of the community.
+
+Originally created as gentle-ai by [Gentleman Programming](https://github.com/Gentleman-Programming).
 
 ## Maintainer
+
+| | Name | GitHub |
+|---|---|---|
+| <img src="https://github.com/JuanCruzRobledo.png" width="40"> | **Juan Cruz Robledo** | [@JuanCruzRobledo](https://github.com/JuanCruzRobledo) |
+
+## Original Creator
 
 | | Name | GitHub |
 |---|---|---|
@@ -30,4 +38,4 @@ Thanks to everyone who has contributed to gentle-ai. This project exists because
 
 ## Contributing
 
-Want to contribute? Check out the [open issues](https://github.com/Gentleman-Programming/gentle-ai/issues) and read the contribution guidelines in the repo.
+Want to contribute? Check out the [open issues](https://github.com/JuanCruzRobledo/jr-stack/issues) and read the contribution guidelines in the repo.

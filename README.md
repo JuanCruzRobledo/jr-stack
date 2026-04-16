@@ -25,6 +25,18 @@ irm https://raw.githubusercontent.com/JuanCruzRobledo/jr-stack/main/scripts/inst
 > **Requisito:** Go 1.24+ ([descargar](https://go.dev/dl/)) y git.
 > El script clona el repo, compila el binario `jr-stack`, y crea toda la configuracion desde cero con OPSX.
 
+### Installation Modes
+
+The installer prompts you to choose a mode:
+
+| Mode | What it installs | Best for |
+|------|-----------------|----------|
+| **Lite** (default) | OPSX orchestrator + Engram memory + Context7 docs | Quick start, students, first-time users |
+| **Full** | Lite + Skills + GGA + Persona | Complete experience, power users |
+| **Custom** | Binary only (configure via TUI) | Advanced users who want full control |
+
+Press Enter for Lite (recommended), or choose 2/3 for other modes.
+
 ### Paso 2: Lanzar la interfaz
 
 ```bash
@@ -74,6 +86,7 @@ Deberia responder mencionando:
 jr-stack                     # Lanzar TUI interactivo
 jr-stack install [flags]     # Instalar desde CLI (sin TUI)
 jr-stack sync                # Sincronizar configs de agentes
+jr-stack sync --lite         # Sync essentials only (OPSX + Engram + Context7)
 jr-stack update              # Buscar actualizaciones
 jr-stack upgrade             # Aplicar actualizaciones
 jr-stack restore             # Restaurar un backup
@@ -133,7 +146,7 @@ Si ya tenias instalado el stack original:
 1. Ejecuta `jr-stack`
 2. Selecciona **"Uninstall Gentleman (gentle-ai)"** del menu
 3. Esto limpia: binario `gentle-ai`, config dir `~/.gentle-ai/`, env vars del shell profile
-4. Procede con la instalacion normal
+4. Run `jr-stack sync` to apply full config, or `jr-stack sync --lite` for essentials only
 
 ---
 

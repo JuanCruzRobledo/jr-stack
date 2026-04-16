@@ -5,7 +5,7 @@
 Los scripts de instalacion (`install-opsx.sh` / `install-opsx.ps1`) requieren
 que el usuario tenga **Go 1.24+** instalado porque compilan desde el codigo fuente.
 
-El repo original ([gentle-ai](https://github.com/Gentleman-Programming/gentle-ai))
+El repo original ([gentle-ai](https://github.com/Gentleman-Programming/gentle-ai), ahora forkeado como [jr-stack](https://github.com/JuanCruzRobledo/jr-stack))
 no requiere Go porque distribuye **binarios pre-compilados** via GitHub Releases.
 
 ## Que falta para eliminar el requisito de Go

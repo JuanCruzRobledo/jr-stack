@@ -1,14 +1,14 @@
 version: 2
 
-project_name: gentle-ai
+project_name: jr-stack
 
 before:
   hooks:
     - go mod tidy
 
 builds:
-  - main: ./cmd/gentle-ai
-    binary: gentle-ai
+  - main: ./cmd/jr-stack
+    binary: jr-stack
     env:
       - CGO_ENABLED=0
     goos:
@@ -43,23 +43,23 @@ changelog:
 
 brews:
   - repository:
-      owner: Gentleman-Programming
+      owner: JuanCruzRobledo
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
     directory: Formula
-    name: gentle-ai
-    homepage: "https://github.com/Gentleman-Programming/gentle-ai"
-    description: "AI Gentle Stack — One command to configure any AI coding agent on any OS."
+    name: jr-stack
+    homepage: "https://github.com/JuanCruzRobledo/jr-stack"
+    description: "JR Stack — OPSX Edition. One command to configure any AI coding agent on any OS."
     license: "MIT"
-    commit_msg_template: "chore: update gentle-ai formula to {{ .Tag }}"
+    commit_msg_template: "chore: update jr-stack formula to {{ .Tag }}"
 
 scoops:
   - repository:
-      owner: Gentleman-Programming
+      owner: JuanCruzRobledo
       name: scoop-bucket
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
-    name: gentle-ai
-    homepage: "https://github.com/Gentleman-Programming/gentle-ai"
-    description: "AI Gentle Stack — One command to configure any AI coding agent on any OS."
+    name: jr-stack
+    homepage: "https://github.com/JuanCruzRobledo/jr-stack"
+    description: "JR Stack — OPSX Edition. One command to configure any AI coding agent on any OS."
     license: MIT
-    commit_msg_template: "chore: update gentle-ai to {{ .Tag }}"
+    commit_msg_template: "chore: update jr-stack to {{ .Tag }}"

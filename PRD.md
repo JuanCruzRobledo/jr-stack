@@ -1,9 +1,9 @@
-# PRD: Gentleman AI Installer
+# PRD: JR Stack Installer
 
-> **One command. Any agent. Any OS. The Gentleman AI ecosystem — configured and ready.**
+> **One command. Any agent. Any OS. The JR Stack ecosystem — configured and ready.**
 
 **Version**: 0.1.0-draft
-**Author**: Gentleman Programming
+**Author**: Juan Cruz Robledo
 **Date**: 2026-02-27
 **Status**: Draft
 
@@ -30,13 +30,13 @@ Most developers either:
 - Spend DAYS manually configuring one agent, then can't replicate it on another machine or tool
 - Never set up memory, MCP, or skills because the setup is fragmented across 5 different repos
 
-**This installer eliminates that gap entirely.** You pick your agent(s), you pick your config level, and the entire Gentleman AI ecosystem gets injected into your tools — ready to go. From zero to championship-level AI development in minutes.
+**This installer eliminates that gap entirely.** You pick your agent(s), you pick your config level, and the entire JR Stack ecosystem gets injected into your tools — ready to go. From zero to championship-level AI development in minutes.
 
 ---
 
 ## 2. Vision
 
-**The Gentleman AI ecosystem — installable by anyone, on any agent, on any OS, in one command.**
+**The JR Stack ecosystem — installable by anyone, on any agent, on any OS, in one command.**
 
 This is NOT an "AI agent installer." Most agents are already easy to install (`npm i -g @anthropic-ai/claude-code`, `brew install opencode`, etc.). This is an **ecosystem configurator**: it takes whatever AI agent(s) you use and supercharges them with the Gentleman stack:
 
@@ -285,7 +285,7 @@ The full SDD Agent Team skill set (9 skills):
 - R-SDD-01: SDD skills MUST be installed to the correct path for each selected agent (Claude Code: `~/.claude/skills/`, OpenCode: `~/.config/opencode/skills/`, Cursor: `~/.cursor/skills/`)
 - R-SDD-02: The SDD orchestrator configuration MUST be injected into the agent's global config (CLAUDE.md, opencode.json agents, .cursorrules)
 - R-SDD-03: OpenCode slash commands for SDD phases MUST be installed when OpenCode is selected, enabling the agent to invoke SDD organically when it detects a substantial change
-- R-SDD-04: The installer MUST pull SDD skills from the latest release of `Gentleman-Programming/sdd-agent-team`
+- R-SDD-04: The installer MUST pull SDD skills from the latest release of `JuanCruzRobledo/sdd-agent-team`
 
 ### 6.4 GGA — Gentleman Guardian Angel (AI Code Review)
 
@@ -412,7 +412,7 @@ curl -sL get.gentleman.ai/ai | sh
                 ▼
      ┌─────────────────────────────────┐
      │   TUI: Welcome                   │
-     │   "Gentleman AI Ecosystem"       │
+     │   "JR Stack Ecosystem"       │
      │   Supercharge your AI agents.    │
      └──────────┬──────────────────────┘
                 │
@@ -532,7 +532,7 @@ curl -sL get.gentleman.ai/ai | sh
 For CI, automation, and team provisioning:
 
 ```bash
-gentle-ai install \
+jr-stack install \
   --agents claude-code,opencode \
   --preset gentleman \
   --skills full-stack \
@@ -581,7 +581,7 @@ This section describes how all Gentleman ecosystem components interact with each
 graph TB
     subgraph INSTALLER["🔧 GENTLEMAN AI INSTALLER (one-time setup)"]
         direction TB
-        GAI[gentle-ai binary]
+        GAI[jr-stack binary]
         GAI --> DEP_ENGINE[Dependency Engine]
         GAI --> AGENT_ENGINE[Agent Configurator]
         GAI --> ECO_ENGINE[Ecosystem Injector]
@@ -727,7 +727,7 @@ graph LR
 
 ```mermaid
 flowchart TD
-    START([gentle-ai install]) --> DETECT
+    START([jr-stack install]) --> DETECT
 
     subgraph PHASE_1["Phase 1: System Detection"]
         DETECT[Detect OS / Arch / WSL / Termux]
@@ -748,7 +748,7 @@ flowchart TD
     REVIEW --> BACKUP
 
     subgraph PHASE_3["Phase 3: Backup"]
-        BACKUP[Backup existing configs<br/>~/.gentle-ai-backup-TIMESTAMP/]
+        BACKUP[Backup existing configs<br/>~/.jr-stack-backup-TIMESTAMP/]
     end
 
     BACKUP --> DEP_INSTALL
@@ -812,9 +812,9 @@ flowchart TD
 ```mermaid
 graph TD
     subgraph SOURCES["Source Repositories (fetched at install time)"]
-        REPO_SDD[Gentleman-Programming/<br/>sdd-agent-team]
-        REPO_ENGRAM[Gentleman-Programming/<br/>engram]
-        REPO_GGA[Gentleman-Programming/<br/>gentleman-guardian-angel]
+        REPO_SDD[JuanCruzRobledo/<br/>sdd-agent-team]
+        REPO_ENGRAM[JuanCruzRobledo/<br/>engram]
+        REPO_GGA[JuanCruzRobledo/<br/>gentleman-guardian-angel]
         REPO_SKILLS[Skills Registry<br/>30+ skill files]
     end
 
@@ -1056,9 +1056,9 @@ graph TB
 ### 8.2 Package Structure (Proposed)
 
 ```
-gentle-ai/
+jr-stack/
 ├── cmd/
-│   └── gentle-ai/
+│   └── jr-stack/
 │       └── main.go                 # CLI entrypoint
 ├── internal/
 │   ├── system/
@@ -1182,10 +1182,10 @@ type Preset struct {
 | Method | Command | Priority |
 |--------|---------|----------|
 | curl (recommended) | `curl -sL get.gentleman.ai/ai \| sh` | P0 |
-| Homebrew | `brew install Gentleman-Programming/tap/gentle-ai` | P0 |
-| Go install | `go install github.com/Gentleman-Programming/gentle-ai/cmd/gentle-ai@latest` | P1 |
+| Homebrew | `brew install JuanCruzRobledo/tap/jr-stack` | P0 |
+| Go install | `go install github.com/JuanCruzRobledo/jr-stack/cmd/jr-stack@latest` | P1 |
 | Direct binary | Download from GitHub Releases | P1 |
-| winget (Windows) | `winget install gentle-ai` | P2 |
+| winget (Windows) | `winget install jr-stack` | P2 |
 
 ### 9.2 Cross-Compilation Targets
 
@@ -1213,9 +1213,9 @@ type Preset struct {
 ### 10.1 Self-Update
 
 **Requirements:**
-- R-UPDATE-01: The installer MUST support `gentle-ai update` to check for and install newer versions of itself
-- R-UPDATE-02: The installer MUST support `gentle-ai update --skills` to pull latest skill versions for all configured agents
-- R-UPDATE-03: The installer MUST support `gentle-ai update --engram` to update Engram to the latest version
+- R-UPDATE-01: The installer MUST support `jr-stack update` to check for and install newer versions of itself
+- R-UPDATE-02: The installer MUST support `jr-stack update --skills` to pull latest skill versions for all configured agents
+- R-UPDATE-03: The installer MUST support `jr-stack update --engram` to update Engram to the latest version
 - R-UPDATE-04: The installer SHOULD check for updates on launch and notify (not auto-update)
 
 ### 10.2 Config Sync
@@ -1294,7 +1294,7 @@ The completion screen MUST show:
 ### 12.3 Reliability
 - R-REL-01: Every installation step MUST be idempotent (safe to re-run)
 - R-REL-02: If a step fails, the installer MUST continue with remaining steps and report failures at the end
-- R-REL-03: The installer MUST support `gentle-ai repair` to re-run failed steps
+- R-REL-03: The installer MUST support `jr-stack repair` to re-run failed steps
 - R-REL-04: The backup system MUST create timestamped snapshots before any config modification
 
 ### 12.4 Extensibility
@@ -1312,12 +1312,12 @@ The completion screen MUST show:
 
 ## 13. Relationship to Gentleman.Dots
 
-| Aspect | Gentleman.Dots | Gentleman AI Installer |
+| Aspect | Gentleman.Dots | JR Stack Installer |
 |--------|---------------|----------------------|
 | Purpose | Dev environment (editors, shells, terminals) | AI development layer (agents, memory, skills) |
 | What it installs | Neovim, Fish/Zsh/Nushell, Tmux/Zellij, Ghostty/Kitty/etc. | Claude Code, OpenCode, Engram, SDD, MCP servers, skills |
 | Overlap | None — complementary tools | None — different layer |
-| Can use together | Yes — install Gentleman.Dots first for dev env, then Gentleman AI for AI layer | Same |
+| Can use together | Yes — install Gentleman.Dots first for dev env, then JR Stack for AI layer | Same |
 | Shared patterns | Go + Bubbletea + Lipgloss, multi-OS detection, backup system | Same architecture, consistent UX |
 
 **Requirements:**
@@ -1356,7 +1356,7 @@ These are NOT requirements for v1 but should inform architectural decisions:
 
 ## 16. Open Questions
 
-1. **Naming**: `gentle-ai`, `gentle-ai`, `gai`, or something else? Should it be part of the `Gentleman-Programming` org or standalone?
+1. **Naming**: `jr-stack`, `jr-stack`, `gai`, or something else? Should it be part of the `JuanCruzRobledo` org or standalone?
 2. **Skills registry**: Should skills be embedded in the binary, fetched from GitHub at install time, or pulled from a dedicated registry service?
 3. **Windows native**: How much effort to invest in native Windows (not WSL) support for v1? Most AI coding tools have limited Windows support anyway.
 4. **Config format**: Should the installer's own config (what was installed, preferences) be stored as JSON, YAML, or TOML? Where?
@@ -1384,30 +1384,30 @@ These are NOT requirements for v1 but should inform architectural decisions:
 
 ```bash
 # Full Gentleman preset with Claude Code + OpenCode
-gentle-ai install --preset gentleman --agents claude-code,opencode
+jr-stack install --preset gentleman --agents claude-code,opencode
 
 # Minimal setup, just Claude Code with basic security
-gentle-ai install --preset minimal --agents claude-code
+jr-stack install --preset minimal --agents claude-code
 
 # Team provisioning from shared profile
-gentle-ai install --profile ./team-ai-config.yaml
+jr-stack install --profile ./team-ai-config.yaml
 
 # Update all skills to latest
-gentle-ai update --skills
+jr-stack update --skills
 
 # Update Engram
-gentle-ai update --engram
+jr-stack update --engram
 
 # Backup current configs
-gentle-ai backup
+jr-stack backup
 
 # Restore from backup
-gentle-ai restore --list
-gentle-ai restore --id 2026-02-27-143022
+jr-stack restore --list
+jr-stack restore --id 2026-02-27-143022
 
 # Repair failed installation
-gentle-ai repair
+jr-stack repair
 
 # Show what's installed
-gentle-ai status
+jr-stack status
 ```

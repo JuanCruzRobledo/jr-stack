@@ -1,4 +1,4 @@
-# Gentle AI — Agent Skills Index
+# JR Stack — Agent Skills Index
 
 When working on this project, load the relevant skill(s) BEFORE writing any code.
 
@@ -13,5 +13,5 @@ When working on this project, load the relevant skill(s) BEFORE writing any code
 
 | Skill | Trigger | Path |
 |-------|---------|------|
-| `gentle-ai-issue-creation` | When creating a GitHub issue, reporting a bug, or requesting a feature. | [`skills/issue-creation/SKILL.md`](skills/issue-creation/SKILL.md) |
-| `gentle-ai-branch-pr` | When creating a pull request, opening a PR, or preparing changes for review. | [`skills/branch-pr/SKILL.md`](skills/branch-pr/SKILL.md) |
+| `jr-stack-issue-creation` | When creating a GitHub issue, reporting a bug, or requesting a feature. | [`skills/issue-creation/SKILL.md`](skills/issue-creation/SKILL.md) |
+| `jr-stack-branch-pr` | When creating a pull request, opening a PR, or preparing changes for review. | [`skills/branch-pr/SKILL.md`](skills/branch-pr/SKILL.md) |
