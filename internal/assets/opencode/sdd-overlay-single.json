@@ -1,0 +1,18 @@
+{
+  "agent": {
+    "sdd-orchestrator": {
+      "mode": "primary",
+      "description": "OPSX Orchestrator - coordinates OPSX workflow via openspec CLI",
+      "prompt": "{file:./AGENTS.md}",
+      "tools": {
+        "read": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "delegate": true,
+        "delegation_read": true,
+        "delegation_list": true
+      }
+    }
+  }
+}

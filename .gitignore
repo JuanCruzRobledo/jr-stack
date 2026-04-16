@@ -1,0 +1,33 @@
+# Binaries
+/jr-stack
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+
+# Output of go coverage
+*.out
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.tar
+dist/
+
+# Agent tooling metadata (generated per-user, not product code)
+.atl/
+
+# Engram local data
+.engram/
