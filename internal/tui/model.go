@@ -613,17 +613,22 @@ func (m Model) handleKeyPress(key tea.KeyMsg) (tea.Model, tea.Cmd) {
 		}
 		return m.goBack(), nil
 	case " ":
+		// Space acts as toggle on checkbox screens, as Enter on all other screens.
 		switch m.Screen {
 		case ScreenAgents:
 			m.toggleCurrentAgent()
+			return m, nil
 		case ScreenDependencyTree:
 			if m.Selection.Preset == model.PresetCustom {
 				m.toggleCurrentComponent()
+				return m, nil
 			}
 		case ScreenSkillPicker:
 			m.toggleCurrentSkill()
+			return m, nil
 		}
-		return m, nil
+		// For all other screens, space behaves like Enter (select/confirm).
+		return m.confirmSelection()
 	case "r":
 		// Rename: only when on ScreenBackups and cursor is on a backup item (not "Back").
 		if m.Screen == ScreenBackups && m.Cursor < len(m.Backups) {
