@@ -306,12 +306,14 @@ func TestInjectOpenCodeNeutralPreservesManagedSections(t *testing.T) {
 		t.Fatal("AGENTS.md has Rioplatense language in neutral persona — should be neutral tone")
 	}
 
-	// Managed sections MUST be preserved
+	// Managed sections MUST be preserved (except engram-protocol which is
+	// deliberately stripped by persona so that engram.Inject can re-inject it
+	// later without creating duplicates).
 	if !strings.Contains(text, "<!-- jr-stack:sdd-orchestrator -->") {
 		t.Fatal("AGENTS.md lost SDD orchestrator section after switching to neutral persona")
 	}
-	if !strings.Contains(text, "<!-- jr-stack:engram-protocol -->") {
-		t.Fatal("AGENTS.md lost engram protocol section after switching to neutral persona")
+	if strings.Contains(text, "<!-- jr-stack:engram-protocol -->") {
+		t.Fatal("AGENTS.md should NOT preserve engram-protocol section — engram.Inject re-adds it")
 	}
 
 	// Gentleman-specific language should be gone — neutral has the same personality but no regional language
@@ -458,8 +460,10 @@ func TestInjectNeutralIdempotentWithManagedSections(t *testing.T) {
 	if strings.Count(text, "## Rules") != 1 {
 		t.Fatal("neutral persona duplicated after idempotent inject")
 	}
-	if strings.Count(text, "<!-- jr-stack:engram-protocol -->") != 1 {
-		t.Fatal("engram section duplicated after idempotent neutral inject")
+	// engram-protocol markers should be stripped by persona (engram.Inject re-adds
+	// them later), so after persona injects there should be zero occurrences.
+	if strings.Count(text, "<!-- jr-stack:engram-protocol -->") != 0 {
+		t.Fatal("engram section should be stripped by persona — engram.Inject re-adds it")
 	}
 }
 

@@ -36,52 +36,40 @@ func (a ClaudeModelAlias) Valid() bool {
 }
 
 // ClaudeModelPresetBalanced returns the default model assignment table.
-// It balances cost and capability: orchestration and architecture phases use opus;
-// implementation and validation use sonnet; archiving uses haiku.
+// It balances cost and capability: orchestration and architecture use opus;
+// implementation uses sonnet; archiving uses haiku.
 func ClaudeModelPresetBalanced() map[string]ClaudeModelAlias {
 	return map[string]ClaudeModelAlias{
 		"orchestrator": ClaudeModelOpus,
 		"sdd-explore":  ClaudeModelSonnet,
 		"sdd-propose":  ClaudeModelOpus,
-		"sdd-spec":     ClaudeModelSonnet,
-		"sdd-design":   ClaudeModelOpus,
-		"sdd-tasks":    ClaudeModelSonnet,
 		"sdd-apply":    ClaudeModelSonnet,
-		"sdd-verify":   ClaudeModelSonnet,
 		"sdd-archive":  ClaudeModelHaiku,
 		"default":      ClaudeModelSonnet,
 	}
 }
 
 // ClaudeModelPresetPerformance returns a model assignment table optimised for
-// output quality. Architecture, planning, and verification phases all use opus.
+// output quality. Orchestration and propose use opus; rest use sonnet/haiku.
 func ClaudeModelPresetPerformance() map[string]ClaudeModelAlias {
 	return map[string]ClaudeModelAlias{
 		"orchestrator": ClaudeModelOpus,
 		"sdd-explore":  ClaudeModelSonnet,
 		"sdd-propose":  ClaudeModelOpus,
-		"sdd-spec":     ClaudeModelSonnet,
-		"sdd-design":   ClaudeModelOpus,
-		"sdd-tasks":    ClaudeModelSonnet,
 		"sdd-apply":    ClaudeModelSonnet,
-		"sdd-verify":   ClaudeModelOpus,
 		"sdd-archive":  ClaudeModelHaiku,
 		"default":      ClaudeModelSonnet,
 	}
 }
 
 // ClaudeModelPresetEconomy returns a model assignment table optimised for cost.
-// Every phase uses sonnet except archive, which uses haiku.
+// Every action uses sonnet except archive, which uses haiku.
 func ClaudeModelPresetEconomy() map[string]ClaudeModelAlias {
 	return map[string]ClaudeModelAlias{
 		"orchestrator": ClaudeModelSonnet,
 		"sdd-explore":  ClaudeModelSonnet,
 		"sdd-propose":  ClaudeModelSonnet,
-		"sdd-spec":     ClaudeModelSonnet,
-		"sdd-design":   ClaudeModelSonnet,
-		"sdd-tasks":    ClaudeModelSonnet,
 		"sdd-apply":    ClaudeModelSonnet,
-		"sdd-verify":   ClaudeModelSonnet,
 		"sdd-archive":  ClaudeModelHaiku,
 		"default":      ClaudeModelSonnet,
 	}

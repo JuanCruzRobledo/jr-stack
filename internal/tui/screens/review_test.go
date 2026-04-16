@@ -18,7 +18,7 @@ func TestRenderReviewShowsSkillNames(t *testing.T) {
 	payload := planner.ReviewPayload{
 		Agents:  []model.AgentID{model.AgentClaudeCode},
 		Persona: model.PersonaGentleman,
-		Preset:  model.PresetFullGentleman,
+		Preset:  model.PresetFull,
 		Components: []planner.ComponentAction{
 			{ID: model.ComponentSkills, Action: "selected"},
 		},
@@ -42,7 +42,7 @@ func TestRenderReviewHidesSkillsSectionWhenEmpty(t *testing.T) {
 	payload := planner.ReviewPayload{
 		Agents:  []model.AgentID{model.AgentClaudeCode},
 		Persona: model.PersonaGentleman,
-		Preset:  model.PresetFullGentleman,
+		Preset:  model.PresetFull,
 		// No Skills field.
 	}
 
@@ -64,7 +64,7 @@ func TestRenderReviewShowsStrictTDDEnabled(t *testing.T) {
 	payload := planner.ReviewPayload{
 		Agents:  []model.AgentID{model.AgentClaudeCode},
 		Persona: model.PersonaGentleman,
-		Preset:  model.PresetFullGentleman,
+		Preset:  model.PresetFull,
 		Components: []planner.ComponentAction{
 			{ID: model.ComponentSDD, Action: "selected"},
 		},
@@ -90,7 +90,7 @@ func TestRenderReviewShowsStrictTDDDisabled(t *testing.T) {
 	payload := planner.ReviewPayload{
 		Agents:  []model.AgentID{model.AgentClaudeCode},
 		Persona: model.PersonaGentleman,
-		Preset:  model.PresetFullGentleman,
+		Preset:  model.PresetFull,
 		Components: []planner.ComponentAction{
 			{ID: model.ComponentSDD, Action: "selected"},
 		},
@@ -116,7 +116,7 @@ func TestRenderReviewHidesStrictTDDWhenNoSDD(t *testing.T) {
 	payload := planner.ReviewPayload{
 		Agents:    []model.AgentID{model.AgentClaudeCode},
 		Persona:   model.PersonaGentleman,
-		Preset:    model.PresetFullGentleman,
+		Preset:    model.PresetFull,
 		HasSDD:    false,
 		StrictTDD: true,
 	}

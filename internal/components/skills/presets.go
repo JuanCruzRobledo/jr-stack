@@ -28,16 +28,16 @@ var foundationSkills = []model.SkillID{
 // SkillsForPreset returns which skills should be installed for a given preset.
 //
 //   - "minimal" / PresetMinimal:       OpenSpec skills only
-//   - "ecosystem-only" / PresetEcosystemOnly: OpenSpec + common framework skills
-//   - "full-gentleman" / PresetFullGentleman: all available skills
+//   - "lite" / PresetLite: OpenSpec + common framework skills
+//   - "full" / PresetFull: all available skills
 //   - "custom" / PresetCustom:         empty (caller should provide explicit list)
 func SkillsForPreset(preset model.PresetID) []model.SkillID {
 	switch preset {
 	case model.PresetMinimal:
 		return copySkills(openSpecSkills)
-	case model.PresetEcosystemOnly:
+	case model.PresetLite:
 		return copySkills(append(openSpecSkills, foundationSkills...))
-	case model.PresetFullGentleman:
+	case model.PresetFull:
 		all := make([]model.SkillID, 0, len(openSpecSkills)+len(foundationSkills))
 		all = append(all, openSpecSkills...)
 		all = append(all, foundationSkills...)

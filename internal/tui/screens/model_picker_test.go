@@ -28,8 +28,8 @@ func makeTestState(phaseIdx int) *ModelPickerState {
 
 func TestModelPickerRows_Count(t *testing.T) {
 	rows := ModelPickerRows()
-	// 1 orchestrator + 1 "Set all" + 9 sub-agents = 11
-	want := 11
+	// 1 orchestrator + 1 "Set all" + 4 OPSX actions = 6
+	want := 6
 	if len(rows) != want {
 		t.Fatalf("ModelPickerRows() len = %d, want %d; rows = %v", len(rows), want, rows)
 	}
@@ -113,7 +113,7 @@ func TestHandleModelNav_SetAllPhasesRow_SetsOnlySubAgents(t *testing.T) {
 		t.Fatal("handleModelNav should return handled=true on enter")
 	}
 
-	// All 9 sub-agents must be assigned
+	// All 4 OPSX action sub-agents must be assigned
 	phases := opencode.SDDPhases()
 	for _, phase := range phases {
 		a, ok := updated[phase]

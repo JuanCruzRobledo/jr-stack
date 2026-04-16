@@ -20,9 +20,9 @@ const (
 
 // claudePresetDescriptions describes each preset.
 var claudePresetDescriptions = map[ClaudeModelPreset]string{
-	ClaudePresetBalanced:    "Smart defaults: opus for architecture, sonnet for most phases, haiku for archiving",
-	ClaudePresetPerformance: "Maximum quality: opus for architecture, planning & verification phases",
-	ClaudePresetEconomy:     "Cost-optimised: sonnet for all phases, haiku for archiving",
+	ClaudePresetBalanced:    "Smart defaults: opus for orchestration & propose, sonnet for explore & apply, haiku for archive",
+	ClaudePresetPerformance: "Maximum quality: opus for orchestration & propose, sonnet for explore & apply, haiku for archive",
+	ClaudePresetEconomy:     "Cost-optimised: sonnet for all actions, haiku for archive",
 	ClaudePresetCustom:      "Pick the model alias for each OPSX action individually",
 }
 
@@ -35,31 +35,25 @@ var claudePresetOrder = []ClaudeModelPreset{
 }
 
 // claudePhases is the ordered list of model-assignment keys shown in custom mode.
+// Only the 4 core OPSX actions are user-facing; internal skills (spec, design,
+// tasks, verify) are orchestrated automatically and don't need separate models.
 var claudePhases = []string{
 	"orchestrator",
 	"sdd-explore",
 	"sdd-propose",
-	"sdd-spec",
-	"sdd-design",
-	"sdd-tasks",
 	"sdd-apply",
-	"sdd-verify",
 	"sdd-archive",
 	"default",
 }
 
 // claudePhaseLabels are the human-readable labels for each OPSX action.
 var claudePhaseLabels = map[string]string{
-	"orchestrator": "Orchestrator",
+	"orchestrator": "Orchestrator (coordinator)",
 	"sdd-explore":  "Explore",
 	"sdd-propose":  "Propose",
-	"sdd-spec":     "Spec",
-	"sdd-design":   "Design",
-	"sdd-tasks":    "Tasks",
 	"sdd-apply":    "Apply",
-	"sdd-verify":   "Verify",
 	"sdd-archive":  "Archive",
-	"default":      "General delegation",
+	"default":      "Default (fallback)",
 }
 
 // claudeAliasOrder defines the cycling order when pressing Enter on a phase row.

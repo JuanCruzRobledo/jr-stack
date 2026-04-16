@@ -25,6 +25,7 @@ func WelcomeOptions(updateResults []update.UpdateResult, updateCheckDone bool) [
 		"Configure models",
 		"Manage backups",
 		"Uninstall Gentleman (gentle-ai)",
+		"Uninstall JR Stack",
 		"Quit",
 	}
 }

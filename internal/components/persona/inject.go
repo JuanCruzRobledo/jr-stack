@@ -283,6 +283,13 @@ func preserveManagedSections(existing, newPersona string, persona model.PersonaI
 	}
 
 	managedSuffix := existing[idx:]
+
+	// Strip the engram-protocol section from the preserved suffix so that the
+	// engram component can re-inject it later in the pipeline without creating
+	// duplicates. Without this, persona copies the markers and engram appends
+	// them again on every sync.
+	managedSuffix = filemerge.InjectMarkdownSection(managedSuffix, "engram-protocol", "")
+
 	updated := newPersona
 	if !strings.HasSuffix(updated, "\n") {
 		updated += "\n"

@@ -97,8 +97,8 @@ const (
 type PresetID string
 
 const (
-	PresetFullGentleman PresetID = "full-gentleman"
-	PresetEcosystemOnly PresetID = "ecosystem-only"
+	PresetFull PresetID = "full"
+	PresetLite PresetID = "lite"
 	PresetMinimal       PresetID = "minimal"
 	PresetCustom        PresetID = "custom"
 )

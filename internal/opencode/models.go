@@ -191,17 +191,14 @@ func FilterModelsForSDD(provider Provider) []Model {
 	return models
 }
 
-// SDDPhases returns the ordered list of SDD phase sub-agent names.
+// SDDPhases returns the ordered list of OPSX action sub-agent names.
+// Only the 4 core user-facing actions are included; internal skills
+// (spec, design, tasks, verify) are handled by the orchestrator.
 func SDDPhases() []string {
 	return []string{
-		"sdd-init",
 		"sdd-explore",
 		"sdd-propose",
-		"sdd-spec",
-		"sdd-design",
-		"sdd-tasks",
 		"sdd-apply",
-		"sdd-verify",
 		"sdd-archive",
 	}
 }

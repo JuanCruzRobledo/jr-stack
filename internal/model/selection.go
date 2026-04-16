@@ -8,7 +8,7 @@ type Selection struct {
 	Preset                 PresetID
 	SDDMode                SDDModeID
 	StrictTDD              bool
-	ModelAssignments       map[string]ModelAssignment  // key = sub-agent name (e.g., "sdd-init")
+	ModelAssignments       map[string]ModelAssignment  // key = sub-agent name (e.g., "sdd-apply")
 	ClaudeModelAssignments map[string]ClaudeModelAlias // key = phase name; value = opus|sonnet|haiku
 }
 

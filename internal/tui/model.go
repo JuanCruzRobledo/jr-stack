@@ -276,8 +276,9 @@ func NewModel(detection system.DetectionResult, version string) Model {
 	selection := model.Selection{
 		Agents:     preselectedAgents(detection),
 		Persona:    model.PersonaGentleman,
-		Preset:     model.PresetFullGentleman,
-		Components: componentsForPreset(model.PresetFullGentleman),
+		Preset:     model.PresetFull,
+		SDDMode:    model.SDDModeSingle,
+		Components: componentsForPreset(model.PresetFull),
 	}
 
 	return Model{
@@ -701,6 +702,16 @@ func (m Model) confirmSelection() (tea.Model, tea.Cmd) {
 			m.UninstallDone = true
 			m.setScreen(ScreenUninstallResult)
 		case 7:
+			// Uninstall JR Stack.
+			homeDir, err := os.UserHomeDir()
+			if err != nil {
+				homeDir = ""
+			}
+			result, _ := cli.UninstallJRStack(homeDir)
+			m.UninstallResult = result
+			m.UninstallDone = true
+			m.setScreen(ScreenUninstallResult)
+		case 8:
 			return m, tea.Quit
 		}
 	case ScreenUpgrade:
@@ -1835,8 +1846,7 @@ func extractAvailableUpdates(results []update.UpdateResult) []screens.UpdateInfo
 }
 
 func (m Model) shouldShowSDDModeScreen() bool {
-	return m.Selection.HasAgent(model.AgentOpenCode) &&
-		hasSelectedComponent(m.Selection.Components, model.ComponentSDD)
+	return false // SDD Mode (Single/Multi) is obsolete in OPSX — always skip
 }
 
 // shouldShowStrictTDDScreen reports whether the Strict TDD Mode screen should
@@ -1855,8 +1865,14 @@ func componentsForPreset(preset model.PresetID) []model.ComponentID {
 	switch preset {
 	case model.PresetMinimal:
 		return []model.ComponentID{model.ComponentEngram}
-	case model.PresetEcosystemOnly:
-		return []model.ComponentID{model.ComponentEngram, model.ComponentSDD, model.ComponentSkills, model.ComponentContext7, model.ComponentGGA}
+	case model.PresetLite:
+		return []model.ComponentID{model.ComponentEngram, model.ComponentSDD, model.ComponentContext7}
+	case model.PresetFull:
+		return []model.ComponentID{
+			model.ComponentEngram, model.ComponentSDD, model.ComponentSkills,
+			model.ComponentContext7, model.ComponentPersona, model.ComponentPermission,
+			model.ComponentGGA,
+		}
 	case model.PresetCustom:
 		return nil
 	default:

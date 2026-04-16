@@ -9,18 +9,18 @@ import (
 
 func PresetOptions() []model.PresetID {
 	return []model.PresetID{
-		model.PresetFullGentleman,
-		model.PresetEcosystemOnly,
+		model.PresetLite,
+		model.PresetFull,
 		model.PresetMinimal,
 		model.PresetCustom,
 	}
 }
 
 var presetDescriptions = map[model.PresetID]string{
-	model.PresetFullGentleman: "Everything: memory, OPSX, skills, docs, persona & security",
-	model.PresetEcosystemOnly: "Core tools only: memory, OPSX, skills & docs (no persona/security)",
-	model.PresetMinimal:       "Just Engram persistent memory",
-	model.PresetCustom:        "Pick individual components yourself",
+	model.PresetLite:    "OPSX essentials: orchestrator + Engram memory + Context7 docs",
+	model.PresetFull:    "Complete ecosystem: + skills, GGA, persona & security",
+	model.PresetMinimal: "Just Engram persistent memory",
+	model.PresetCustom:  "Pick individual components yourself",
 }
 
 func RenderPreset(selected model.PresetID, cursor int) string {

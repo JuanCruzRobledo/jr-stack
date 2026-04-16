@@ -10,16 +10,24 @@ import (
 )
 
 // sddPhaseSet is the set of valid SDD phase agent names that may appear in
-// opencode.json. It includes the sub-agent phases plus the orchestrator.
+// opencode.json. It includes the current OPSX actions, the orchestrator, and
+// legacy phase names (sdd-init, sdd-spec, sdd-design, sdd-tasks, sdd-verify)
+// for backwards compatibility with existing user configs.
 var sddPhaseSet = buildSDDPhaseSet()
 
 func buildSDDPhaseSet() map[string]bool {
 	phases := opencode.SDDPhases()
-	set := make(map[string]bool, len(phases)+1)
+	set := make(map[string]bool, len(phases)+6) // current phases + orchestrator + 5 legacy
 	for _, p := range phases {
 		set[p] = true
 	}
 	set["sdd-orchestrator"] = true
+	// Legacy phases — still accepted from existing configs but no longer offered in TUI.
+	set["sdd-init"] = true
+	set["sdd-spec"] = true
+	set["sdd-design"] = true
+	set["sdd-tasks"] = true
+	set["sdd-verify"] = true
 	return set
 }
 

@@ -126,7 +126,7 @@ func BuildSyncSelection(flags SyncFlags, agentIDs []model.AgentID) model.Selecti
 		skillIDs = append(skillIDs, model.SkillID(raw))
 	}
 
-	preset := model.PresetFullGentleman
+	preset := model.PresetFull
 	if flags.Lite {
 		// Lite mode uses minimal preset — no skills by default.
 		preset = model.PresetMinimal

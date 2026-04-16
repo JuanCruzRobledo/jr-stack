@@ -27,7 +27,7 @@ func TestSkillsForPresetMinimalReturnsSDDOnly(t *testing.T) {
 }
 
 func TestSkillsForPresetEcosystemIncludesFrameworks(t *testing.T) {
-	skills := SkillsForPreset(model.PresetEcosystemOnly)
+	skills := SkillsForPreset(model.PresetLite)
 
 	hasGoTesting := false
 	hasSkillCreator := false
@@ -56,7 +56,7 @@ func TestSkillsForPresetEcosystemIncludesFrameworks(t *testing.T) {
 }
 
 func TestSkillsForPresetFullIncludesAll(t *testing.T) {
-	skills := SkillsForPreset(model.PresetFullGentleman)
+	skills := SkillsForPreset(model.PresetFull)
 	all := AllSkillIDs()
 
 	if len(skills) != len(all) {

@@ -27,7 +27,7 @@ func RenderStrictTDD(enabled bool, cursor int) string {
 	b.WriteString("\n\n")
 	b.WriteString(styles.SubtextStyle.Render("Should agents follow Strict TDD (RED → GREEN → REFACTOR) for every task?"))
 	b.WriteString("\n")
-	b.WriteString(styles.SubtextStyle.Render("When enabled, the sdd-apply agent writes tests first, confirms failure,"))
+	b.WriteString(styles.SubtextStyle.Render("When enabled, the apply phase writes tests first, confirms failure,"))
 	b.WriteString("\n")
 	b.WriteString(styles.SubtextStyle.Render("then implements the minimum code to pass before refactoring."))
 	b.WriteString("\n\n")

@@ -80,9 +80,9 @@ const SDDOrchestratorPhase = "sdd-orchestrator"
 
 // ModelPickerRows returns the row labels for the model picker screen.
 // Row 0 is "sdd-orchestrator" (coordinator), row 1 is "Set all phases",
-// rows 2-10 are the OPSX sub-agent actions.
+// rows 2-5 are the 4 OPSX actions (explore, propose, apply, archive).
 func ModelPickerRows() []string {
-	rows := make([]string, 0, 11)
+	rows := make([]string, 0, 7)
 	rows = append(rows, SDDOrchestratorPhase)
 	rows = append(rows, "Set all phases")
 	rows = append(rows, opencode.SDDPhases()...)
@@ -205,7 +205,7 @@ func handleModelNav(
 			// "sdd-orchestrator" row — assign only to the orchestrator key
 			assignments[SDDOrchestratorPhase] = assignment
 		case state.SelectedPhaseIdx == 1:
-			// "Set all phases" — sets only the 9 sub-agents, NOT the orchestrator.
+			// "Set all phases" — sets only the OPSX action sub-agents, NOT the orchestrator.
 			// Also update AllPhasesModel so the label stays in sync with the last
 			// "Set all" action (Issue #146: individual phase selections must NOT touch this).
 			for _, phase := range phases {

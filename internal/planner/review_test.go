@@ -11,7 +11,7 @@ import (
 func TestBuildReviewPayloadIncludesPlatformDecision(t *testing.T) {
 	selection := model.Selection{
 		Persona: model.PersonaGentleman,
-		Preset:  model.PresetFullGentleman,
+		Preset:  model.PresetFull,
 	}
 
 	resolved := ResolvedPlan{
@@ -100,7 +100,7 @@ func TestBuildReviewPayloadPlatformDecisionPropagatesPerProfile(t *testing.T) {
 		t.Run(decision.OS+"/"+decision.LinuxDistro, func(t *testing.T) {
 			selection := model.Selection{
 				Persona: model.PersonaGentleman,
-				Preset:  model.PresetFullGentleman,
+				Preset:  model.PresetFull,
 			}
 			resolved := ResolvedPlan{
 				Agents:           []model.AgentID{model.AgentClaudeCode},
@@ -124,7 +124,7 @@ func TestBuildReviewPayloadPlatformDecisionPropagatesPerProfile(t *testing.T) {
 func TestBuildReviewPayloadIncludesSkills(t *testing.T) {
 	selection := model.Selection{
 		Persona: model.PersonaGentleman,
-		Preset:  model.PresetFullGentleman,
+		Preset:  model.PresetFull,
 		Skills:  []model.SkillID{"sdd-apply", "sdd-spec", "go-testing"},
 	}
 	resolved := ResolvedPlan{
@@ -152,7 +152,7 @@ func TestBuildReviewPayloadIncludesSkills(t *testing.T) {
 func TestBuildReviewPayloadSkillsNilWhenNotSelected(t *testing.T) {
 	selection := model.Selection{
 		Persona: model.PersonaGentleman,
-		Preset:  model.PresetFullGentleman,
+		Preset:  model.PresetFull,
 		// Skills not set
 	}
 	resolved := ResolvedPlan{
@@ -176,7 +176,7 @@ func TestBuildReviewPayloadSkillsNilWhenNotSelected(t *testing.T) {
 func TestBuildReviewPayloadIncludesStrictTDD(t *testing.T) {
 	selection := model.Selection{
 		Persona:   model.PersonaGentleman,
-		Preset:    model.PresetFullGentleman,
+		Preset:    model.PresetFull,
 		StrictTDD: true,
 	}
 	resolved := ResolvedPlan{
@@ -201,7 +201,7 @@ func TestBuildReviewPayloadIncludesStrictTDD(t *testing.T) {
 func TestBuildReviewPayloadStrictTDDFalseWhenDisabled(t *testing.T) {
 	selection := model.Selection{
 		Persona:   model.PersonaGentleman,
-		Preset:    model.PresetFullGentleman,
+		Preset:    model.PresetFull,
 		StrictTDD: false,
 	}
 	resolved := ResolvedPlan{
@@ -226,7 +226,7 @@ func TestBuildReviewPayloadStrictTDDFalseWhenDisabled(t *testing.T) {
 func TestBuildReviewPayloadHasSDDFalseWithoutSDDComponent(t *testing.T) {
 	selection := model.Selection{
 		Persona:   model.PersonaGentleman,
-		Preset:    model.PresetFullGentleman,
+		Preset:    model.PresetFull,
 		StrictTDD: true,
 	}
 	resolved := ResolvedPlan{
